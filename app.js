@@ -9,6 +9,7 @@ const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
 const passport = require('passport');
 require("./config/passport")(passport)
+const session = require('express-session');
 
 //var router = exp.Router()
 const app = express()
@@ -22,6 +23,15 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('views', __dirname + '/public/views')
 app.set('view engine', 'ejs');

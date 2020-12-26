@@ -26,14 +26,16 @@ router.get('/user/signin', (req, res) => {
 
 
 router.post('/user/signin', (req, res, next) => {
-    console.log('hell')
-    passport.authenticate('local', {
-        successRedirect: '../index',
-        failureRedirect: '../index',
-        failureFlash: true,
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.render('user/signin') }
+        res.render('index', { user: user })
+            /*req.logIn(user, function(err) {
+                if (err) { return next(err); }
+                return res.redirect('/users/' + user.username);
+            });*/
     })(req, res, next);
-
-})
+});
 
 
 // serve the homepage
@@ -102,5 +104,15 @@ router.post('/user/signup', (req, res) => {
         })
     }
 })
+
+
+
+router.get('/user/signout', (req, res) => {
+    req.logout();
+    res.redirect('signin');
+
+})
+
+
 
 module.exports = router
