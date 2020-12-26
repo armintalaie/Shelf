@@ -15,19 +15,37 @@
             document.getElementsByTagName('head')[0].appendChild(css);
         })();
     </script>
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="../assets/css/theme.css">
 
 </head>
 
 <body>
-    <%- include('header.ejs') %>
+    <%- include('../header.ejs') %>
+
 
         <main role="main">
 
 
 
             <section class="bg-gray200 pt-5 pb-5">
+
+                <div class="container">
+                    <form action="/user/signup" method="post" class="bd-search hidden-sm-down small">
+                        <input type="text" class="form-control bg-graylight border-0 font-weight-bold" id="name" name="name" placeholder="Name" autocomplete="off">
+                        <br>
+                        <input type="text" class="form-control bg-graylight border-0 font-weight-bold" id="email" name="email" placeholder="Email" autocomplete="off">
+                        <br>
+                        <input type="text" class="form-control bg-graylight border-0 font-weight-bold" id="password" name="password" placeholder="Password" autocomplete="off">
+                        <br>
+                        <br>
+                        <button class="btn" type="submit"> Sign in </button>
+
+
+                    </form>
+
+                </div>
+
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-7">

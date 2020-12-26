@@ -3,6 +3,10 @@ const Schema = mongoose.Schema
 
 
 const UserSchema = new Schema({
+    name: {
+        type: String
+    },
+
     email: {
         type: String
     },
@@ -11,9 +15,9 @@ const UserSchema = new Schema({
         type: String
     },
 
-    products: [
+    /*products: [
         { type: mongoose.Schema.Types.ObjectId, ref: 'product' }
-    ]
+    ]*/
 
 })
 

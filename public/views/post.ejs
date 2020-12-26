@@ -2,21 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Post - Pintereso Bootstrap Template</title>
-    <script type="text/javascript">
-        (function() {
-            var css = document.createElement('link');
-            css.href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
-            css.rel = 'stylesheet';
-            css.type = 'text/css';
-            document.getElementsByTagName('head')[0].appendChild(css);
-        })();
-    </script>
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/theme.css">
+    <%- include('partial.ejs') %>
 
 </head>
 
@@ -36,7 +22,7 @@
                                 <div class="card-body">
                                     <h1 class="card-title display-4">
                                         Sushi Rolls </h1>
-                                    <form action="/products" enctype="multipart/form-data" method="post">
+                                    <form action="/products/create" enctype="multipart/form-data" method="post">
                                         <label for="product_name">Product name: </label>
                                         <input type="string" id="product_name" name="name">
                                         <br>
@@ -63,8 +49,8 @@
 
         </main>
 
-        <script src="assets/js/app.js"></script>
-        <script src="assets/js/theme.js"></script>
+        <!--<script src="assets/js/app.js"></script>
+        <script src="assets/js/theme.js"></script>-->
 
         <footer class="footer pt-5 pb-5 text-center">
 
