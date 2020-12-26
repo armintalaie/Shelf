@@ -3,11 +3,12 @@ const fs = require('fs')
 const mongoose = require('mongoose')
 const express = require('express')
 var path = require('path');
-const Product = require('./models/product')
 var bodyParser = require('body-parser')
 var multer = require('multer');
 const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
+const passport = require('passport');
+require("./config/passport")(passport)
 
 //var router = exp.Router()
 const app = express()

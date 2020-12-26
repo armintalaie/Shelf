@@ -5,7 +5,9 @@ var bodyParser = require('body-parser')
 var multer = require('multer')
 const fs = require('fs')
 const mongoose = require('mongoose')
-const { use } = require('passport')
+const passport = require('passport')
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 
 
 
@@ -16,6 +18,22 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((err) => console.log(err))
 
 
+// serve the homepage
+router.get('/user/signin', (req, res) => {
+    res.render('user/signin')
+
+})
+
+
+router.post('/user/signin', (req, res, next) => {
+    console.log('hell')
+    passport.authenticate('local', {
+        successRedirect: '../index',
+        failureRedirect: '../index',
+        failureFlash: true,
+    })(req, res, next);
+
+})
 
 
 // serve the homepage
@@ -26,25 +44,63 @@ router.get('/user/signup', (req, res) => {
 
 
 router.post('/user/signup', (req, res) => {
+    const { name, email, password, password2 } = req.body;
+    let errors = [];
+    console.log(' Name ' + name + ' email :' + email + ' pass:' + password);
+    if (!name || !email || !password || !password2) {
+        errors.push({ msg: "Please fill in all fields" })
+    }
+    //check if match
+    if (password !== password2) {
+        errors.push({ msg: "passwords dont match" });
+    }
 
-
-    console.log(req.body)
-
-    var user = new User
-    user.name = req.body.name
-    user.email = req.body.email
-    user.password = req.body.password
-
-
-    user.save()
-        .then((res1) => {
-            res.render('index')
+    //check if password is more than 6 characters
+    if (password.length < 6) {
+        errors.push({ msg: 'password atleast 6 characters' })
+    }
+    if (errors.length > 0) {
+        res.render('user/signup', {
+            errors: errors,
+            name: name,
+            email: email,
+            password: password,
+            password2: password2
         })
-        .catch((err) => {
-            console.log(err)
-        })
+    } else {
+        //validation passed
+        User.findOne({ email: email }).exec((err, user) => {
+            console.log(user);
+            if (user) {
+                errors.push({ msg: 'email already registered' });
+                render(res, errors, name, email, password, password2);
 
+            } else {
+                const newUser = new User({
+                    name: name,
+                    email: email,
+                    password: password
+                });
+
+                //hash password
+                bcrypt.genSalt(10, (err, salt) =>
+                    bcrypt.hash(newUser.password, salt,
+                        (err, hash) => {
+                            if (err) throw err;
+                            //save pass to hash
+                            newUser.password = hash;
+                            //save user
+                            newUser.save()
+                                .then((value) => {
+                                    console.log(value)
+                                    res.render('index');
+                                })
+                                .catch(value => console.log(value));
+
+                        }));
+            }
+        })
+    }
 })
-
 
 module.exports = router
