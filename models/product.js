@@ -2,21 +2,16 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 
-
-
 const ProductSchema = new Schema({
     name: {
         type: String,
         required: [true, 'Name field required']
     },
-    img: {
-        type: Buffer,
-
-    },
-    price: {
+    img: { data: Buffer, contentType: String },
+    quantity: {
         type: Number
     },
-    quantity: {
+    price: {
         type: Number
     }
 

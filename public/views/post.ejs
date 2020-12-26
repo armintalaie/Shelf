@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Post - Pintereso Bootstrap Template</title>
+    <script type="text/javascript">
+        (function() {
+            var css = document.createElement('link');
+            css.href = 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            document.getElementsByTagName('head')[0].appendChild(css);
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+
+</head>
+
+<body>
+    <%- include('header.ejs') %>
+
+        <main role="main">
+
+
+
+            <section class="bg-gray200 pt-5 pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-7">
+                            <article class="card">
+                                <img class="card-img-top mb-2" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e0245bb4e87077312cc3d102e68c1efd&auto=format&fit=crop&w=735&q=80" alt="Card image">
+                                <div class="card-body">
+                                    <h1 class="card-title display-4">
+                                        Sushi Rolls </h1>
+                                    <form action="/products" enctype="multipart/form-data" method="post">
+                                        <label for="product_name">Product name: </label>
+                                        <input type="string" id="product_name" name="name">
+                                        <br>
+                                        <label for="product_img">Image </label>
+                                        <input type="file" id="image" name="image">
+                                        <br>
+                                        <label for="product_quantity">Quantity </label>
+                                        <input type="number" name="quantity">
+                                        <br>
+                                        <label for="product_price">Price </label>
+                                        <input type="number" name="price">
+                                        <br>
+                                        <button>Submit</button>
+                                    </form>
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/theme.js"></script>
+
+        <footer class="footer pt-5 pb-5 text-center">
+
+            <div class="container">
+
+                <div class="socials-media">
+
+                    <ul class="list-unstyled">
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-facebook"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-twitter"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-instagram"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-behance"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-dribbble"></i></a></li>
+                    </ul>
+
+                </div>
+
+                <!--
+              All the links in the footer should remain intact.
+              You may remove the links only if you donate:
+              https://www.wowthemes.net/freebies-license/
+            -->
+                <p>© <span class="credits font-weight-bold">        
+            <a target="_blank" class="text-dark" href="https://www.wowthemes.net/pintereso-free-html-bootstrap-template/"><u>Pintereso Bootstrap HTML Template</u> by WowThemes.net.</a>
+          </span>
+                </p>
+
+
+            </div>
+
+        </footer>
+</body>
+
+</html>
