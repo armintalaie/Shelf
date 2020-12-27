@@ -18,6 +18,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((err) => console.log(err))
 
 
+router.use((req, res, next) => {
+    res.locals.name = "aa";
+    next();
+});
+
 // serve the homepage
 router.get('/user/signin', (req, res) => {
     res.render('user/signin')
@@ -25,17 +30,7 @@ router.get('/user/signin', (req, res) => {
 })
 
 
-router.post('/user/signin', (req, res, next) => {
-    passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err); }
-        if (!user) { return res.render('user/signin') }
-        res.render('index', { user: user })
-            /*req.logIn(user, function(err) {
-                if (err) { return next(err); }
-                return res.redirect('/users/' + user.username);
-            });*/
-    })(req, res, next);
-});
+
 
 
 // serve the homepage
@@ -104,6 +99,35 @@ router.post('/user/signup', (req, res) => {
         })
     }
 })
+
+
+router.post('/user/signin',
+    //console.log(req.body)
+
+    passport.authenticate('local', {
+        successRedirect: 's',
+        failureRedirect: '/signout',
+    })
+)
+
+router.get('/user/s', (req, res, next) => {
+    res.locals.name = 'Gourav';
+    res.locals.user = req.user
+    res.render('index')
+})
+
+/*
+passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.render('user/signin') }
+    res.render('index', { user: user })
+        /*req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.redirect('/users/' + user.username);
+        });*/
+
+// })(req, res, next);
+//});
 
 
 

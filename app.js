@@ -7,9 +7,11 @@ var bodyParser = require('body-parser')
 var multer = require('multer');
 const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
+const session = require('express-session');
 const passport = require('passport');
 require("./config/passport")(passport)
-const session = require('express-session');
+
+
 
 //var router = exp.Router()
 const app = express()
@@ -30,6 +32,10 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.use((req, res, next) => {
+    app.locals.name = "aa";
+    next();
+});
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -47,6 +53,13 @@ app.use(express.urlencoded({ extended: true }))
 
 // serve the homepage
 app.get('/home', (req, res) => {
+    res.locals.user = req.user
+    res.render('index')
+
+})
+
+app.get('/', (req, res) => {
+    res.locals.user = req.user
     res.render('index')
 
 })
@@ -70,7 +83,6 @@ app.use(userRoutes)
 /*app.use((req, res) => {
     res.render('index') //res.status(404).render(404)
 })*/
-
 
 
 app.listen(8081, () => {

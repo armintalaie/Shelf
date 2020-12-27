@@ -6,7 +6,10 @@ var multer = require('multer')
 const fs = require('fs')
 const mongoose = require('mongoose')
 var path = require('path')
-    //const storage = require('../app')
+const passport = require('passport')
+const session = require('express-session')
+const User = require('../models/user')
+require("../config/passport")(passport)
 
 // setting storage
 storage = multer.diskStorage({
@@ -24,6 +27,7 @@ var upload = multer({ storage: storage });
 
 
 router.get('/products/create', (req, res) => {
+    res.locals.user = req.user
     res.render('create')
 })
 
@@ -31,13 +35,14 @@ router.get('/products/create', (req, res) => {
 
 // create product
 router.get('/product/create', (req, res) => {
+    res.locals.user = req.user
     res.render('post')
 
 })
 
 
 // creating new product
-router.post('/products/create', upload.single('image'), (req, res, next) => {
+router.post('/products/create', upload.single('image'), (req, resp, next) => {
 
     if (!req.file) {
         console.log("No file received");
@@ -52,16 +57,28 @@ router.post('/products/create', upload.single('image'), (req, res, next) => {
     product.name = req.body.name
     product.price = req.body.price
     product.quantity = req.body.quantity
+    console.log(product._id)
+    console.log(req.user)
+    product.user = req.user._id
+    req.user.products.push(product._id)
 
-    res.sendFile(path.join(__dirname + '/../uploads/products/' + req.file.filename))
+    us = req.user
 
     product.save()
         .then((res) => {
-            res.redirect('home')
+            resp.locals.user = req.user
+            resp.render('myshelf')
         })
         .catch((err) => {
             console.log(err)
         })
+
+})
+
+
+router.get('/products/myshelf', (req, res) => {
+    res.locals.user = req.user
+    res.render('myshelf')
 
 })
 

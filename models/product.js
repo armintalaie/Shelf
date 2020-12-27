@@ -15,6 +15,14 @@ const ProductSchema = new Schema({
         type: Number
     }
 
+    ,
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    }
+
+
+
 })
 
 

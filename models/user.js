@@ -15,9 +15,9 @@ const UserSchema = new Schema({
         type: String
     },
 
-    /*products: [
+    products: [
         { type: mongoose.Schema.Types.ObjectId, ref: 'product' }
-    ]*/
+    ]
 
 })
 
