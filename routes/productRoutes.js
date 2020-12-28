@@ -81,6 +81,34 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
 
 })
 
+router.get('/products/:id', (req, res) => {
+    MongoClient.connect(dbURI, function(err, db) {
+        if (err) { return console.dir(err); }
+        var collection = db.db('Shelf');
+        console.log(req.params.id)
+        Product.findById(req.params.id)
+            .lean()
+            .exec(function(err, results) {
+                res.locals.product = results
+                res.locals.user = req.user
+                res.render('product')
+            });
+
+
+
+        /* collection.collection('products').findOne({ _id: req.params.id.toString() }, function(err, resu) {
+             res.locals.product = resu
+             
+             console.log(resu._id)
+             res.locals.user = req.user
+             res.render('product')
+         })*/
+    })
+
+
+
+})
+
 
 router.get('/products/myshelf', (req, res) => {
     MongoClient.connect(dbURI, function(err, db) {
@@ -89,13 +117,16 @@ router.get('/products/myshelf', (req, res) => {
 
         collection.collection('products').find({ user_id: req.user._id }).toArray(function(err, resu) {
             res.locals.products = resu
+            res.locals.user = req.user
+            res.render('myshelf')
         })
     })
 
-    res.locals.user = req.user
-    res.render('myshelf')
+
 
 })
+
+
 
 
 

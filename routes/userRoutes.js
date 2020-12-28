@@ -141,10 +141,6 @@ router.get('/user/myshelf', (req, res, next) => {
 
         collection.collection('products').find().toArray(function(err, resu) {
             res.locals.products = resu
-
-            res.locals.products.forEach(element => {
-                elem = new Buffer(products[i]).toString('base64');
-            });
             res.locals.name = 'Gourav';
             res.locals.user = req.user
             res.render('myshelf')
@@ -153,18 +149,6 @@ router.get('/user/myshelf', (req, res, next) => {
 
 })
 
-/*
-passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.render('user/signin') }
-    res.render('index', { user: user })
-        /*req.logIn(user, function(err) {
-            if (err) { return next(err); }
-            return res.redirect('/users/' + user.username);
-        });*/
-
-// })(req, res, next);
-//});
 
 
 
