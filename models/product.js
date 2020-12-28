@@ -13,15 +13,15 @@ const ProductSchema = new Schema({
     },
     price: {
         type: Number
-    }
-
-    ,
+    },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
+    },
+
+    public: {
+        type: Boolean
     }
-
-
 
 })
 

@@ -8,8 +8,8 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-
-
+var mongo = require('mongodb')
+var MongoClient = require('mongodb').MongoClient;
 
 
 const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
@@ -26,6 +26,30 @@ router.use((req, res, next) => {
 // serve the homepage
 router.get('/user/signin', (req, res) => {
     res.render('user/signin')
+
+})
+
+router.get('/data', function(req, res, next) {
+    /*mongo.connect(dbURI, function(err, cl) {
+        console.log('The insertDocuments db is typeof: ' + typeof cl)
+        var cursor = cl.db('users')
+        console.log('The insertDocuments db is typeof: ' + typeof cursor)
+        cursor.collection('products').find().toArray(function(err, resu) {
+            console.log(resu)
+        })
+    })*/
+    MongoClient.connect(dbURI, function(err, db) {
+        if (err) { return console.dir(err); }
+        var collection = db.db('Shelf');
+
+        collection.collection('products').find().toArray(function(err, resu) {
+            resu.forEach(element => {
+                console.log(element.name)
+            });
+        })
+    })
+
+
 
 })
 
@@ -105,15 +129,28 @@ router.post('/user/signin',
     //console.log(req.body)
 
     passport.authenticate('local', {
-        successRedirect: 's',
+        successRedirect: '/user/myshelf',
         failureRedirect: '/signout',
     })
 )
 
-router.get('/user/s', (req, res, next) => {
-    res.locals.name = 'Gourav';
-    res.locals.user = req.user
-    res.render('index')
+router.get('/user/myshelf', (req, res, next) => {
+    MongoClient.connect(dbURI, function(err, db) {
+        if (err) { return console.dir(err); }
+        var collection = db.db('Shelf');
+
+        collection.collection('products').find().toArray(function(err, resu) {
+            res.locals.products = resu
+
+            res.locals.products.forEach(element => {
+                elem = new Buffer(products[i]).toString('base64');
+            });
+            res.locals.name = 'Gourav';
+            res.locals.user = req.user
+            res.render('myshelf')
+        })
+    })
+
 })
 
 /*

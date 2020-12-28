@@ -10,6 +10,15 @@ const userRoutes = require('./routes/userRoutes')
 const session = require('express-session');
 const passport = require('passport');
 require("./config/passport")(passport)
+var mongo = require('mongodb')
+var MongoClient = require('mongodb').MongoClient;
+
+var db
+
+const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
+
+
+//exports.db = db;
 
 
 
@@ -17,10 +26,11 @@ require("./config/passport")(passport)
 const app = express()
 
 // connect to mongodb
-const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("connected to db"))
     .catch((err) => console.log(err))
+
+
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -54,7 +64,19 @@ app.use(express.urlencoded({ extended: true }))
 // serve the homepage
 app.get('/home', (req, res) => {
     res.locals.user = req.user
-    res.render('index')
+    MongoClient.connect(dbURI, function(err, db) {
+        if (err) { return console.dir(err); }
+        var collection = db.db('Shelf');
+
+        collection.collection('products').find().toArray(function(err, resu) {
+            res.locals.products = resu
+            res.locals.user = req.user
+            res.render('index')
+        })
+
+    })
+
+
 
 })
 
@@ -74,6 +96,10 @@ app.get('/user/signin', (req, res) => {
     res.render('user/signin')
 
 })
+app.use(function(req, res, next) {
+    req.db = db;
+    next();
+});
 
 
 app.use(productRoutes)
@@ -83,6 +109,8 @@ app.use(userRoutes)
 /*app.use((req, res) => {
     res.render('index') //res.status(404).render(404)
 })*/
+
+
 
 
 app.listen(8081, () => {

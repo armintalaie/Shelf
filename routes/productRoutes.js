@@ -11,6 +11,10 @@ const session = require('express-session')
 const User = require('../models/user')
 require("../config/passport")(passport)
 
+var mongo = require('mongodb')
+var MongoClient = require('mongodb').MongoClient;
+const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
+
 // setting storage
 storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -57,9 +61,10 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
     product.name = req.body.name
     product.price = req.body.price
     product.quantity = req.body.quantity
+    product.public = false
     console.log(product._id)
     console.log(req.user)
-    product.user = req.user._id
+    product.user_id = req.user._id
     req.user.products.push(product._id)
 
     us = req.user
@@ -67,7 +72,8 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
     product.save()
         .then((res) => {
             resp.locals.user = req.user
-            resp.render('myshelf')
+            console.log(resp.locals.user)
+            resp.render('/user/myshelf')
         })
         .catch((err) => {
             console.log(err)
@@ -77,6 +83,15 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
 
 
 router.get('/products/myshelf', (req, res) => {
+    MongoClient.connect(dbURI, function(err, db) {
+        if (err) { return console.dir(err); }
+        var collection = db.db('Shelf');
+
+        collection.collection('products').find({ user_id: req.user._id }).toArray(function(err, resu) {
+            res.locals.products = resu
+        })
+    })
+
     res.locals.user = req.user
     res.render('myshelf')
 
