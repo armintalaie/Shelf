@@ -98,6 +98,25 @@ router.get('/products/create', (req, res) => {
     res.render('create')
 })
 
+router.get('/products/create', (req, res) => {
+    res.locals.user = req.user
+    res.render('create')
+})
+
+
+
+router.post('/products/search', (req, res) => {
+    search = req.body.search
+    dab.collection('products').find({ name: { $regex: ".*" + search + ".*" }, public: true }).toArray(function(err, results) {
+        res.locals.products = results
+        res.locals.user = req.user
+        res.render('index')
+    })
+})
+
+
+
+
 
 
 // create product
@@ -164,14 +183,12 @@ router.post('/products/update/:id', (req, res) => {
     if (req.body.public) {
         checkedValue = true
     }
-    console.log(req.params.id + '  nkjlwenfljkwnfwkljfnfkjwnfkjnkwjfnkjrnkljfnklfjnfkljn')
     Product.findByIdAndUpdate(req.params.id, {
         name: req.body.name,
         price: req.body.price,
         quantity: req.body.quantity,
         public: checkedValue
     }, function(err, result) {
-        //console.log(result.name)
         getProducts(req.user, 'myshelf', res, renderView)
     })
 

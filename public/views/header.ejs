@@ -5,8 +5,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarsDefault">
         <ul class="navbar-nav mr-auto align-items-center">
-            <form class="bd-search hidden-sm-down">
-                <input type="text" class="form-control bg-graylight border-0 font-weight-bold" id="search-input" placeholder="Search..." autocomplete="off">
+            <form class="bd-search hidden-sm-down" action="../products/search" method="post">
+                <input type="text" class="form-control bg-graylight border-0 font-weight-bold" name="search" id="search-input" placeholder="Search..." autocomplete="off">
                 <div class="dropdown-menu bd-search-results" id="search-results">
                 </div>
             </form>
