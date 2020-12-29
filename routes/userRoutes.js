@@ -60,8 +60,6 @@ router.get('/data', function(req, res, next) {
         })
     })
 
-
-
 })
 
 
@@ -141,7 +139,7 @@ router.post('/user/signin',
 
     passport.authenticate('local', {
         successRedirect: '/user/myshelf',
-        failureRedirect: '/signout',
+        failureRedirect: '/user/signin',
     })
 )
 

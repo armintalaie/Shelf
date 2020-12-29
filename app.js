@@ -90,6 +90,12 @@ app.get('/', (req, res) => {
 
 })
 
+app.get('/guide', (req, res) => {
+    res.locals.user = req.user
+    res.render('guide')
+
+})
+
 
 
 

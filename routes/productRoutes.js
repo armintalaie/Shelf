@@ -16,6 +16,7 @@ const { db } = require('../models/product')
 var MongoClient = require('mongodb').MongoClient;
 const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
 
+
 // setting storage
 storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -153,7 +154,7 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
 
     product.save()
         .then((res) => {
-            getProducts(req.user, 'myshelf', res, renderView)
+            getProducts(req.user, 'myshelf', resp, renderView)
         })
         .catch((err) => {
             console.log(err)

@@ -18,6 +18,11 @@
     },
     "homepage": "https://github.com/armintalaie/Shelf#readme",
     "dependencies": {
+        "@tensorflow-models/mobilenet": "^2.0.4",
+        "@tensorflow/tfjs": "^2.7.0",
+        "@tensorflow/tfjs-converter": "^1.2.11",
+        "@tensorflow/tfjs-core": "^1.2.11",
+        "@tensorflow/tfjs-node": "^2.7.0",
         "bcrypt": "^5.0.0",
         "bootstrap": "^4.5.3",
         "ejs": "^3.1.5",

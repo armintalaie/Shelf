@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partial.ejs') %>
+
+</head>
+
+
+<body>
+    <%- include('header.ejs'); %>
+
+        <section class="mt-4 mb-5">
+            <div class="container mb-5">
+                <h1 class="title  font-weight-bolder" style="color:blue;">
+                    Hello!
+                </h1>
+                <br>
+                <h3 class="title  font-weight-bolder" style="">
+                    I'm Armin Talaie. This is my work for the Shopify internship challenge for backend
+                </h3>
+
+                <ul class="navbar-nav ml-auto align-items-center d-inline-block p-3">
+                    <li class="nav-item d-inline-block p-1 m-1"> <a href="#project_explanation" class="btn" style="background-color: blue; color: white;">Project Explantion</a></li>
+                    <li class="nav-item d-inline-block p-1 m-1"> <a href="#website_navigation" class="btn " style="background-color: blue; color: white;">Website Navigation </a></li>
+                    <li class="nav-item d-inline-block p-1 m-1"> <a href="#user_information" class="btn" style="background-color: blue; color: white;">User Information </a></li>
+
+                    <li class="nav-item d-inline-block p-3 m-1"> <a href="https://github.com/armintalaie/Shelf.git" class="btn" style="background-color: blue; color: white;">Github Link </a></li>
+
+                </ul>
+
+                <section id="project_explanation" class="bg-gray200 pt-5 pb-5 mb-5">
+                    <div class="container">
+
+                        <h3 class="h3 col-4 pb-4 font-weight-bold" style="color: blue;">Project Explantion </h3>
+
+
+                        <p>For this website, I wanted to learn Node so I thought it would be the perfect opportunity to learn it while I implement this project.
+                        </p>
+                        <p> It is an image/product repository with the following features:
+                            <ul class=" ml-auto ">
+                                <li class="h4"> Image repository</li>
+                                <ul class=" ml-auto ">
+                                    <li class="h6"> upload products</li>
+                                    <li class="h6"> delete products</li>
+                                    <li class="h6"> edit/modify products</li>
+                                    <li class="h6"> public status</li>
+                                    <li class="h6"> see products from other users + themselves in their home feed</li>
+                                </ul>
+                                <br>
+                                <p> Users can upload products with images, name, quantity and price to their inventory. These images are stored in a mongodb database.
+                                    <br>Users can see all ther products in their inventory while, only their public products are shown in the home feed to others
+                                </p>
+                                <li class="h4"> User Database and Session</li>
+                                <ul class=" ml-auto ">
+                                    <li class="h6"> Sign up/Sign in</li>
+                                    <li class="h6"> Only user has access to delete or modify their own products</li>
+                                    <li class="h6"> passwords are hashed</li>
+
+                                </ul>
+                                <br>
+                                <p> I implemented a database via mongodb and mongoose to store user information. Additonally, users are authenticated using Passport.js and their passwords are hashed before stored in the database <br> this also provides users
+                                    with access to modify only their own products
+                                </p>
+
+                                <li class="h4"> Search Feature </li>
+                                Users or non-users can search for a product name using the search bar
+                            </ul>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="bg-gray200 pt-5 pb-5 mb-5" id="website_navigation">
+                    <div class="container">
+
+                        <h3 class="h3 col-4 pb-4 font-weight-bold" style="color: blue;">Website Navigation </h3>
+                        <div class="m-2 mb-5">
+                            <h6>User Management</h6>
+                            <ul class=" ml-auto ">
+                                <li>
+                                    <p> the "sign up" and "sign in" button in the navigation bar will allow you to create an account or login</p>
+                                </li>
+                                <li>
+                                    <p> password must be at least 6 characters long</p>
+                                </li>
+                                <li>
+                                    <p> wrong info when signing in, refreshes the sign in page</p>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="m-2 mb-5">
+                            <h6>Product management</h6>
+                            <ul class=" ml-auto ">
+                                <li>
+                                    <p> To be able to add a product, first sign in or sign up then sign in. Then you can click the button on the top right to add a product.<br> after creating the product, it will navigate to your inventory page containing
+                                        the new product
+                                    </p>
+                                </li>
+                                <li>
+                                    <p> To allow product to be visible in the home feed for everyone, select the public checkbox</p>
+                                </li>
+                                <li>
+                                    <p> To see details of a product, hover over the product and you'll see "more" bottom left of the image. Click on it to see product information. Also, to be able to delete, or edit it, user must own the product </p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="m-2 mb-5">
+                            <h6>Home tab</h6>
+                            <ul class=" ml-auto ">
+                                <li>
+                                    <p> the home tab shows the feed with public photos </p>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="m-2 mb-5">
+                            <h6>Inventory</h6>
+                            <ul class=" ml-auto ">
+                                <li>
+                                    <p> to see your inventort, after signing in, click on hte {user's name}'s shelf', on the right of the navigation bar</p>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </section>
+
+
+
+
+                <section class="bg-gray200 pt-5 pb-5 mb-10" id="user_information">
+                    <div class="container pb-5">
+
+                        <h3 class="h3 col-4 pb-4 font-weight-bold" style="color: blue;">User Information</h3>
+
+
+                        <p>I've created a couple of sample users to fill up the website. You can either sign in as one of them or create another accoutn
+                        </p>
+                        <div class="col-md-5">
+                            <table class="table">
+                                <tr>
+                                    <th class="thead-dark"></th>
+                                    <th class="thead-dark">Username</th>
+                                    <th class="thead-dark">Password</th>
+
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td> shopify@shopify.com </td>
+                                    <td> shopify2021 </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td> user1@gmail.com </td>
+                                    <td> user1user1 </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td> user2@gmail.com </td>
+                                    <td> user2user2 </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td> user3@gmail.com </td>
+                                    <td> user3user3 </td>
+                                </tr>
+
+                            </table>
+
+
+
+                        </div>
+                </section>
+
+
+
+                </div>
+        </section>
+
+
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/theme.js"></script>
+
+        <footer class="footer pt-5 pb-5 text-center">
+
+
+            <!--
+              All the links in the footer should remain intact.
+              You may remove the links only if you donate:
+              https://www.wowthemes.net/freebies-license/
+            -->
+            <p>© <span class="credits font-weight-bold">        
+            <a target="_blank" class="text-dark" href="https://www.wowthemes.net/pintereso-free-html-bootstrap-template/"><u>Pintereso Bootstrap HTML Template</u> by WowThemes.net.</a>
+          </span>
+            </p>
+
+
+            </div>
+
+        </footer>
+</body>
+
+
+
+</html>
