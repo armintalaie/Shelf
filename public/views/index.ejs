@@ -10,94 +10,87 @@
 <body>
     <%- include('header.ejs'); %>
 
-        </br>
-        <% if (typeof user !== 'undefined') { %>
-            <p> Welcome
-                <%= user.name %>
+        <section class="mt-4 mb-5">
+            <div class="container mb-5">
 
-            </p>
-            <% } else { %>
-                <p> Welcome
 
-                </p>
-                <% }  %>
-
+                <h1 class="title  font-weight-bolder text-indigo">
                     <% if (typeof user !== 'undefined') { %>
-                        <p> Welcome
-                            <%= locals.name %>
+                        <%= user.name %>'s feed
+                            <% } else { %>
 
-                        </p>
-                        <% } else { %>
-                            <p> Welcome
-
-                            </p>
-                            <% }  %>
-                                <main role="main">
+                                Shelf
+                                <% }%>
+                </h1>
 
 
+            </div>
+        </section>
 
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="card-columns">
-                                                <% products.forEach(image => { %>
-                                                    <div class="card card-pin">
-                                                        <img src="data:image/<%=image.img.contentType%>;base64,
+        <main role="main">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="card-columns">
+                        <% products.forEach(image => { %>
+                            <div class="card card-pin">
+                                <img src="data:image/<%=image.img.contentType%>;base64,
                                                     <%=image.img.data.toString('base64')%>">
-                                                        <div class="overlay">
-                                                            <h3 class="card-title">
-                                                                <%= image.name %>
-                                                            </h3>
-                                                            <div class="more">
-                                                                <a href="<%='/products/'+image._id%>">
-                                                                    <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More </a>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <% }) %>
-
-
-                                            </div>
-                                        </div>
+                                <div class="overlay">
+                                    <h3 class="card-title">
+                                        <%= image.name %>
+                                    </h3>
+                                    <div class="more">
+                                        <a href="<%='/products/'+image._id%>">
+                                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More </a>
                                     </div>
-                                    </section>
+                                </div>
 
-                                </main>
+                            </div>
+                            <% }) %>
 
-                                <script src="assets/js/app.js"></script>
-                                <script src="assets/js/theme.js"></script>
 
-                                <footer class="footer pt-5 pb-5 text-center">
+                    </div>
+                </div>
+            </div>
+            </section>
 
-                                    <div class="container">
+        </main>
 
-                                        <div class="socials-media">
+        <script src="assets/js/app.js"></script>
+        <script src="assets/js/theme.js"></script>
 
-                                            <ul class="list-unstyled">
-                                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-facebook"></i></a></li>
-                                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-twitter"></i></a></li>
-                                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-instagram"></i></a></li>
-                                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-google-plus"></i></a></li>
-                                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-behance"></i></a></li>
-                                                <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-dribbble"></i></a></li>
-                                            </ul>
+        <footer class="footer pt-5 pb-5 text-center">
 
-                                        </div>
+            <div class="container">
 
-                                        <!--
+                <div class="socials-media">
+
+                    <ul class="list-unstyled">
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-facebook"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-twitter"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-instagram"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-behance"></i></a></li>
+                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-dribbble"></i></a></li>
+                    </ul>
+
+                </div>
+
+                <!--
               All the links in the footer should remain intact.
               You may remove the links only if you donate:
               https://www.wowthemes.net/freebies-license/
             -->
-                                        <p>© <span class="credits font-weight-bold">        
+                <p>© <span class="credits font-weight-bold">        
             <a target="_blank" class="text-dark" href="https://www.wowthemes.net/pintereso-free-html-bootstrap-template/"><u>Pintereso Bootstrap HTML Template</u> by WowThemes.net.</a>
           </span>
-                                        </p>
+                </p>
 
 
-                                    </div>
+            </div>
 
-                                </footer>
+        </footer>
 </body>
 
 

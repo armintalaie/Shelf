@@ -23,14 +23,25 @@
 <body>
     <%- include('../header.ejs') %>
 
+        <section class="mt-4 mb-5">
+            <div class="container mb-5">
+
+                <h1 class="title  font-weight-bolder text-primary">
+                    Sign up
+                </h1>
+            </div>
+        </section>
+        <br>
+        <br>
+
 
         <main role="main">
 
 
 
-            <section class="bg-gray200 pt-5 pb-5">
+            <section class="bg-gray200 pt-5 pb-5 mb-10">
 
-                <div class="container">
+                <div class="container p-6">
                     <form action="/user/signup" method="post" class="bd-search hidden-sm-down small">
                         <input type="text" class="form-control bg-graylight border-0 font-weight-bold" id="name" name="name" placeholder="Name" autocomplete="off">
                         <br>
@@ -41,47 +52,20 @@
                         <input type="password" class="form-control bg-graylight border-0 font-weight-bold" id="password2" name="password2" placeholder="Confirm Password" autocomplete="off">
                         <br>
                         <br>
-                        <button class="btn" type="submit"> Sign in </button>
+                        <button class="btn-indigo btn" type="submit"> Sign in </button>
 
 
                     </form>
 
                 </div>
 
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-7">
-                            <article class="card">
-                                <img class="card-img-top mb-2" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e0245bb4e87077312cc3d102e68c1efd&auto=format&fit=crop&w=735&q=80" alt="Card image">
-                                <div class="card-body">
-                                    <h1 class="card-title display-4">
-                                        Sushi Rolls </h1>
-                                    <form action="/products" enctype="multipart/form-data" method="post">
-                                        <label for="product_name">Product name: </label>
-                                        <input type="string" id="product_name" name="name">
-                                        <br>
-                                        <label for="product_img">Image </label>
-                                        <input type="file" id="image" name="image">
-                                        <br>
-                                        <label for="product_quantity">Quantity </label>
-                                        <input type="number" name="quantity">
-                                        <br>
-                                        <label for="product_price">Price </label>
-                                        <input type="number" name="price">
-                                        <br>
-                                        <button>Submit</button>
-                                    </form>
-
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
 
                 </div>
             </section>
 
         </main>
+
+
 
         <!--<script src="assets/js/app.js"></script>
         <script src="assets/js/theme.js"></script>-->

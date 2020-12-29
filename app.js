@@ -30,7 +30,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("connected to db"))
     .catch((err) => console.log(err))
 
-
+MongoClient.connect(dbURI, { useNewUrlParser: true })
+    .then(client => {
+        const dbo = client.db('Shelf');
+        app.locals.dbo = dbo; // this line stores the collection from above so it is available anywhere in the app, after small delay.
+    }).catch(error => console.error(error));
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -68,7 +72,7 @@ app.get('/home', (req, res) => {
         if (err) { return console.dir(err); }
         var collection = db.db('Shelf');
 
-        collection.collection('products').find().toArray(function(err, resu) {
+        collection.collection('products').find({ public: true }).toArray(function(err, resu) {
             res.locals.products = resu
             res.locals.user = req.user
             res.render('index')

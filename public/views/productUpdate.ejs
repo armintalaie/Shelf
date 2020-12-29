@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partial.ejs') %>
+</head>
+
+<body>
+    <%- include('header.ejs') %>
+
+        <section class="bg-gray200 pt-6 pb-6">
+            <div class="container p-1 m-3">
+                <div class="row p-1 m-1 justify-content-center">
+                    <div class="col-md-5 p-1 m-1">
+                        <article class="card">
+                            <img src="data:image/<%=product.img.contentType%>;base64,
+                            <%=product.img.data.toString('base64')%>">
+                            <div class="card-body">
+                                <h1 class="card-title display-4">
+                                    <%= product.name %>
+                                </h1>
+
+                            </div>
+
+
+                        </article>
+                    </div>
+
+                    <div class="col-md-5" style="float: right;">
+                        <h2>
+                            <%=product._id%>
+                        </h2>
+                        <form action="<%='/products/update/'+product._id%>" method="post">
+                            <table class=" display-4 table ">
+                                <tr>
+                                    <th class="thead-dark ">Title</th>
+                                    <td>
+                                        <h2>
+                                            <input type="string" id="product_name" name="name">
+
+
+                                        </h2>
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <th class="thead-dark ">Quantity</th>
+                                    <td>
+                                        <input type="number" id="product_name" name="quantity">
+
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Price</th>
+                                    <td>
+                                        <input type="number" id="product_name" name="price">
+
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Public Status</th>
+                                    <td>
+                                        <input type="checkbox" id="product_public" name="public">
+                                    </td>
+                                </tr>
+
+
+                            </table>
+
+
+                            <% if (locals.user) { %>
+                                <% if (locals.product.user_id.toString() == locals.user._id.toString() ) {%>
+
+                                    <button type="submit" class="btn btn-md btn-indigo flex-wrap ">Update Product</button>
+                                    <a href="<%='/products/remove/' +product._id%>"><button class="btn btn-md btn-primary flex-wrap">Delete Product</button></a>
+                                    <% }} %>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            </div>
+        </section>
+
+
+
+</body>
+
+
+
+</html>

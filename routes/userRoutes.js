@@ -29,6 +29,17 @@ router.get('/user/signin', (req, res) => {
 
 })
 
+var dab
+
+MongoClient.connect(dbURI, {
+    useNewUrlParser: true
+}, function(err, db) {
+    if (err) throw err;
+    dab = db.db('Shelf')
+});
+
+
+
 router.get('/data', function(req, res, next) {
     /*mongo.connect(dbURI, function(err, cl) {
         console.log('The insertDocuments db is typeof: ' + typeof cl)
@@ -135,22 +146,16 @@ router.post('/user/signin',
 )
 
 router.get('/user/myshelf', (req, res, next) => {
-    MongoClient.connect(dbURI, function(err, db) {
-        if (err) { return console.dir(err); }
-        var collection = db.db('Shelf');
+    if (!req.user)
+        res.redirect('signin')
 
-        collection.collection('products').find().toArray(function(err, resu) {
-            res.locals.products = resu
-            res.locals.name = 'Gourav';
-            res.locals.user = req.user
-            res.render('myshelf')
-        })
+    dab.collection('products').find({ user_id: req.user._id }).toArray(function(err, resu) {
+        res.locals.products = resu
+        res.locals.user = req.user
+        res.render('myshelf')
     })
 
 })
-
-
-
 
 router.get('/user/signout', (req, res) => {
     req.logout();
