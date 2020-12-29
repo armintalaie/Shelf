@@ -27,9 +27,6 @@
                     </div>
 
                     <div class="col-md-5" style="float: right;">
-                        <h2>
-                            <%=product._id%>
-                        </h2>
                         <form action="<%='/products/update/'+product._id%>" method="post">
                             <table class=" display-4 table ">
                                 <tr>
@@ -65,11 +62,7 @@
                                         <input type="checkbox" id="product_public" name="public">
                                     </td>
                                 </tr>
-
-
                             </table>
-
-
                             <% if (locals.user) { %>
                                 <% if (locals.product.user_id.toString() == locals.user._id.toString() ) {%>
 

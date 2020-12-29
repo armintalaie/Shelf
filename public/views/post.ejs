@@ -14,7 +14,7 @@
             <div class="container mb-5">
 
                 <h1 class="title  font-weight-bolder text-indigo">
-                    Inventory
+                    Add A Product
                 </h1>
             </div>
         </section>
@@ -22,30 +22,36 @@
         <main role="main">
 
 
-
-            <section class="bg-gray200 pt-10 pb-10">
+            <section class="bg-gray200 pt-10 pb-10 mb-10">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-md-7">
+                        <div class="col-md-auto">
                             <article class="card">
                                 <div class="card-body">
                                     <form action="/products/create" enctype="multipart/form-data" method="post">
-                                        <label for="product_name">Product name: </label>
-                                        <input type="string" id="product_name" name="name">
-                                        <br>
-                                        <label for="product_img">Image </label>
-                                        <input type="file" id="image" name="image">
-                                        <br>
-                                        <label for="product_quantity">Quantity </label>
-                                        <input type="number" name="quantity">
-                                        <br>
-                                        <label for="product_price">Price </label>
-                                        <input type="number" name="price">
-                                        <br>
-                                        <label for="product_public">Set public? </label>
-                                        <input type="checkbox" name="public" value="yes">
-                                        <br>
-                                        <button>Submit</button>
+                                        <table class=" display-6 table ">
+                                            <tr>
+                                                <th class="thead-dark "><label for="product_name">Product name: </label></th>
+                                                <td> <input type="string" id="product_name" name="name"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="thead-dark "> <label for="product_img">Image </label></th>
+                                                <td> <input type="file" id="image" name="image"> </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="thead-dark ">Quantity</th>
+                                                <td><input type="number" id="product_name" name="quantity"></td>
+                                            </tr>
+                                            <tr>
+                                                <th><label for="product_price">Price </label> </th>
+                                                <td> <input type="number" name="price"></td>
+                                            </tr>
+                                            <tr>
+                                                <th><label for="product_public">Set public? </label></th>
+                                                <td> <input type="checkbox" name="public" value="yes"></td>
+                                            </tr>
+                                        </table>
+                                        <button type="submit" class="btn btn-md btn-indigo flex-wrap ">Add Product</button>
                                     </form>
 
                                 </div>
@@ -66,18 +72,6 @@
 
             <div class="container">
 
-                <div class="socials-media">
-
-                    <ul class="list-unstyled">
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-facebook"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-twitter"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-instagram"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-behance"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-dribbble"></i></a></li>
-                    </ul>
-
-                </div>
 
                 <!--
               All the links in the footer should remain intact.

@@ -27,35 +27,34 @@
             </div>
         </section>
 
-        <main role="main">
+        <section class="mt-4">
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="card-columns">
-                        <% products.forEach(image => { %>
-                            <div class="card card-pin">
-                                <img src="data:image/<%=image.img.contentType%>;base64,
+            <main role="main">
+                <div class="container-fluid pb-10 justify-content-center">
+                    <div class="flex-md-row justify-content-center">
+                        <div class="card-columns justify-content-center">
+                            <% products.forEach(image => { %>
+                                <div class="card card-pin">
+                                    <img class="card-img" src="data:image/<%=image.img.contentType%>;base64,
                                                     <%=image.img.data.toString('base64')%>">
-                                <div class="overlay">
-                                    <h3 class="card-title">
-                                        <%= image.name %>
-                                    </h3>
-                                    <div class="more">
-                                        <a href="<%='/products/'+image._id%>">
-                                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More </a>
+                                    <div class="overlay">
+                                        <h3 class="card-title">
+                                            <%= image.name %>
+                                        </h3>
+                                        <div class="more">
+                                            <a href="<%='/products/'+image._id%>">
+                                                <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More </a>
+                                        </div>
                                     </div>
                                 </div>
-
-                            </div>
-                            <% }) %>
-
-
+                                <% }) %>
+                        </div>
                     </div>
                 </div>
-            </div>
-            </section>
 
-        </main>
+
+            </main>
+        </section>
 
         <script src="assets/js/app.js"></script>
         <script src="assets/js/theme.js"></script>
@@ -64,18 +63,6 @@
 
             <div class="container">
 
-                <div class="socials-media">
-
-                    <ul class="list-unstyled">
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-facebook"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-twitter"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-instagram"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-behance"></i></a></li>
-                        <li class="d-inline-block ml-1 mr-1"><a href="#" class="text-dark"><i class="fa fa-dribbble"></i></a></li>
-                    </ul>
-
-                </div>
 
                 <!--
               All the links in the footer should remain intact.

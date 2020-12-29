@@ -22,28 +22,25 @@ storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
     }
 })
-var upload = multer({ storage: storage });
+var upload = multer({ storage: storage })
 
 
 
-
-
-
-function getProducts(user, dst, res, callback) {
+function getProducts(user, dst, res, db, callback) {
     console.log("getting products")
     if (user) {
 
-        req.mydb.collection('products').find({ user_id: user._id }).toArray(function(err, results) {
+        db.collection('products').find({ user_id: user._id }).toArray(function(err, results) {
             callback(user, dst, res, results)
         })
     } else {
-        req.mydb.collection('products').find({ public: true }).toArray(function(err, results) {
+        db.collection('products').find({ public: true }).toArray(function(err, results) {
             callback(user, dst, res, results)
         })
     }
 }
 
-function singleProduct(user, id, action, res, callback) {
+function singleProduct(user, id, action, res, db, callback) {
     switch (action) {
         case 'remove':
             console.log('rem')
@@ -77,11 +74,9 @@ function renderView(user, dst, res, results) {
     }
     res.locals.user = user
     res.render(dst)
-
 }
 
 
-
 router.get('/products/create', (req, res) => {
     res.locals.user = req.user
     res.render('create')
@@ -91,7 +86,6 @@ router.get('/products/create', (req, res) => {
     res.locals.user = req.user
     res.render('create')
 })
-
 
 
 router.post('/products/search', (req, res) => {
@@ -102,9 +96,6 @@ router.post('/products/search', (req, res) => {
         res.render('index')
     })
 })
-
-
-
 
 
 
@@ -142,7 +133,7 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
 
     product.save()
         .then((res) => {
-            getProducts(req.user, 'myshelf', resp, renderView)
+            getProducts(req.user, 'myshelf', resp, req.mydb, renderView)
         })
         .catch((err) => {
             console.log(err)
@@ -151,18 +142,18 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
 })
 
 router.get('/products/:id', (req, res) => {
-    singleProduct(req.user, req.params.id, 'view', res, renderView)
+    singleProduct(req.user, req.params.id, 'view', res, req.mydb, renderView)
 
 })
 
 router.get('/products/remove/:id', (req, res) => {
-    singleProduct(req.user, req.params.id, 'remove', res, renderView)
+    singleProduct(req.user, req.params.id, 'remove', res, req.mydb, renderView)
 
 })
 
 
 router.get('/products/update/:id', (req, res) => {
-    singleProduct(req.user, req.params.id, 'update', res, renderView)
+    singleProduct(req.user, req.params.id, 'update', res, req.mydb, renderView)
 
 })
 
@@ -178,14 +169,14 @@ router.post('/products/update/:id', (req, res) => {
         quantity: req.body.quantity,
         public: checkedValue
     }, function(err, result) {
-        getProducts(req.user, 'myshelf', res, renderView)
+        getProducts(req.user, 'myshelf', res, req.mydb, renderView)
     })
 
 })
 
 
 router.get('/products/myshelf', (req, res) => {
-    getProducts(req.user, 'myshelf', res, renderView)
+    getProducts(req.user, 'myshelf', res, req.mydb, renderView)
 
 })
 

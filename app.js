@@ -8,7 +8,7 @@ var multer = require('multer')
 const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
 const session = require('express-session')
-const passport = require('passport');
+const passport = require('passport')
 require("./config/passport")(passport)
 var mongo = require('mongodb')
 var MongoClient = require('mongodb').MongoClient
@@ -24,14 +24,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("connected to db"))
     .catch((err) => console.log(err))
 
-
-
 MongoClient.connect(dbURI, {
     useNewUrlParser: true
 }, function(err, db) {
     if (err) throw err;
     mydb = db.db('Shelf')
-
 
 })
 
@@ -39,7 +36,7 @@ app.all('*', function(request, response, next) {
     console.log('database connected')
     request.mydb = mydb
     next()
-});
+})
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -50,13 +47,13 @@ app.use(session({
     saveUninitialized: true
 }))
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.set('views', __dirname + '/public/views')
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs')
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: true }))
 
 
@@ -90,7 +87,7 @@ app.get('/user/signin', (req, res) => {
 app.use(function(req, res, next) {
     req.db = mydb;
     next();
-});
+})
 
 
 app.use(productRoutes)
