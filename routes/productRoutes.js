@@ -10,10 +10,6 @@ const passport = require('passport')
 const session = require('express-session')
 const User = require('../models/user')
 require("../config/passport")(passport)
-
-var mongo = require('mongodb')
-const { db } = require('../models/product')
-var MongoClient = require('mongodb').MongoClient;
 const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
 
 
@@ -26,18 +22,10 @@ storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
     }
 })
-
-
 var upload = multer({ storage: storage });
 
-var dab
 
-MongoClient.connect(dbURI, {
-    useNewUrlParser: true
-}, function(err, db) {
-    if (err) throw err;
-    dab = db.db('Shelf')
-});
+
 
 
 
@@ -45,11 +33,11 @@ function getProducts(user, dst, res, callback) {
     console.log("getting products")
     if (user) {
 
-        dab.collection('products').find({ user_id: user._id }).toArray(function(err, results) {
+        req.mydb.collection('products').find({ user_id: user._id }).toArray(function(err, results) {
             callback(user, dst, res, results)
         })
     } else {
-        dab.collection('products').find({ public: true }).toArray(function(err, results) {
+        req.mydb.collection('products').find({ public: true }).toArray(function(err, results) {
             callback(user, dst, res, results)
         })
     }
@@ -108,7 +96,7 @@ router.get('/products/create', (req, res) => {
 
 router.post('/products/search', (req, res) => {
     search = req.body.search
-    dab.collection('products').find({ name: { $regex: ".*" + search + ".*" }, public: true }).toArray(function(err, results) {
+    req.mydb.collection('products').find({ name: { $regex: ".*" + search + ".*" }, public: true }).toArray(function(err, results) {
         res.locals.products = results
         res.locals.user = req.user
         res.render('index')

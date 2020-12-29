@@ -12,6 +12,7 @@ var mongo = require('mongodb')
 var MongoClient = require('mongodb').MongoClient;
 
 
+
 const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("connected to db"))
@@ -26,39 +27,6 @@ router.use((req, res, next) => {
 // serve the homepage
 router.get('/user/signin', (req, res) => {
     res.render('user/signin')
-
-})
-
-var dab
-
-MongoClient.connect(dbURI, {
-    useNewUrlParser: true
-}, function(err, db) {
-    if (err) throw err;
-    dab = db.db('Shelf')
-});
-
-
-
-router.get('/data', function(req, res, next) {
-    /*mongo.connect(dbURI, function(err, cl) {
-        console.log('The insertDocuments db is typeof: ' + typeof cl)
-        var cursor = cl.db('users')
-        console.log('The insertDocuments db is typeof: ' + typeof cursor)
-        cursor.collection('products').find().toArray(function(err, resu) {
-            console.log(resu)
-        })
-    })*/
-    MongoClient.connect(dbURI, function(err, db) {
-        if (err) { return console.dir(err); }
-        var collection = db.db('Shelf');
-
-        collection.collection('products').find().toArray(function(err, resu) {
-            resu.forEach(element => {
-                console.log(element.name)
-            });
-        })
-    })
 
 })
 
@@ -123,7 +91,7 @@ router.post('/user/signup', (req, res) => {
                             newUser.save()
                                 .then((value) => {
                                     console.log(value)
-                                    res.render('index');
+                                    res.redirect('signin');
                                 })
                                 .catch(value => console.log(value));
 
@@ -147,7 +115,7 @@ router.get('/user/myshelf', (req, res, next) => {
     if (!req.user)
         res.redirect('signin')
 
-    dab.collection('products').find({ user_id: req.user._id }).toArray(function(err, resu) {
+    req.mydb.collection('products').find({ user_id: req.user._id }).toArray(function(err, resu) {
         res.locals.products = resu
         res.locals.user = req.user
         res.render('myshelf')
@@ -158,7 +126,6 @@ router.get('/user/myshelf', (req, res, next) => {
 router.get('/user/signout', (req, res) => {
     req.logout();
     res.redirect('signin');
-
 })
 
 
