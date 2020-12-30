@@ -28,8 +28,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 MongoClient.connect(dbURI, {
     useNewUrlParser: true
 }, function(err, db) {
-    if (err) throw err;
-    mydb = db.db('Shelf')
+    if (err) {
+        console.log('failed to connect ' + err)
+    } else {
+        mydb = db.db('Shelf')
+    }
 
 })
 
@@ -68,9 +71,13 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/home', (req, res) => {
     res.locals.user = req.user
     mydb.collection('products').find({ public: true }).toArray(function(err, resu) {
-        res.locals.products = resu
-        res.locals.user = req.user
-        res.render('index')
+        if (err) {
+            console.log('Unable to connect to the mongoDB server. Error:', err)
+        } else {
+            res.locals.products = resu
+            res.locals.user = req.user
+            res.render('index')
+        }
     })
 })
 
