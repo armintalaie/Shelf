@@ -70,7 +70,11 @@ app.get('/home', (req, res) => {
 
 app.get('/', (req, res) => {
     res.locals.user = req.user
-    res.render('index')
+    mydb.collection('products').find({ public: true }).toArray(function(err, resu) {
+        res.locals.products = resu
+        res.locals.user = req.user
+        res.render('index')
+    })
 
 })
 
