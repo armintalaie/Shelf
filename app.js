@@ -1,4 +1,4 @@
-const port = 8081
+const port = 3000
 const fs = require('fs')
 const mongoose = require('mongoose')
 const express = require('express')
@@ -75,13 +75,7 @@ app.get('/home', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    if (req.user)
-        res.locals.user = req.user
-    mydb.collection('products').find({ public: true }).toArray(function(err, resu) {
-        res.locals.products = resu
-        res.locals.user = req.user
-        res('index')
-    })
+    res.redirect('home')
 
 })
 
@@ -106,6 +100,6 @@ app.use(userRoutes)
 
 
 
-app.listen(process.env.PORT || port, () => {
+app.listen((process.env.PORT || port), () => {
     console.log('listening on 8081' + __dirname + '/public/index.html')
 })
