@@ -95,6 +95,6 @@ app.use(userRoutes)
 
 
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log('listening on 8081' + __dirname + '/public/index.html')
 })
