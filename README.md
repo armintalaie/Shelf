@@ -41,10 +41,10 @@ product/inventory
   </ol>
 </details>
 
-
-<br><br>
+<br>
 
 <hr>
+
 ## Project Explantion
 
 For this website, I wanted to learn Node so I thought it would be the perfect opportunity to learn it while I implement this project.
@@ -62,6 +62,7 @@ It is an image/product repository with the following features:
      <li> see products from other users + themselves in their home feed </li>
  </ul>
  </ul>
+ <br>
 
  <p> Users can upload products with images, name, quantity and price to their inventory. These images are stored in a mongodb database.
 <br>Users can see all ther products in their inventory while, only their public products are shown in the home feed to others
@@ -88,9 +89,10 @@ Users or non-users can search for a product name using the search bar
 
 <hr>
 
-### Wesbite Navigation
 
-#### [Wesbite Link](https://guarded-coast-71095.herokuapp.com/)
+## Wesbite Navigation
+
+### [Wesbite Link](https://guarded-coast-71095.herokuapp.com/)
 
 
 <ul>  
