@@ -8,6 +8,7 @@ var multer = require('multer')
 const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport')
 require("./config/passport")(passport)
 var mongo = require('mongodb')
@@ -32,6 +33,10 @@ MongoClient.connect(dbURI, {
 
 })
 
+
+const connection = mongoose.createConnection(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
 app.all('*', function(request, response, next) {
     console.log('database connected')
     request.mydb = mydb
@@ -44,7 +49,8 @@ app.use(bodyParser.json())
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: connection })
 }))
 
 app.use(passport.initialize())
@@ -69,11 +75,12 @@ app.get('/home', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.locals.user = req.user
+    if (req.user)
+        res.locals.user = req.user
     mydb.collection('products').find({ public: true }).toArray(function(err, resu) {
         res.locals.products = resu
         res.locals.user = req.user
-        res.render('index')
+        res('index')
     })
 
 })
