@@ -45,7 +45,7 @@ product/inventory
 
 <hr>
 
-## Project Explantion
+## Project Explanation
 
 For this website, I wanted to learn Node so I thought it would be the perfect opportunity to learn it while I implement this project.
 
@@ -90,9 +90,9 @@ Users or non-users can search for a product name using the search bar
 <hr>
 
 
-## Wesbite Navigation
+## Website Navigation
 
-### [Wesbite Link](https://guarded-coast-71095.herokuapp.com/)
+### [Website Link](https://guarded-coast-71095.herokuapp.com/)
 
 
 <ul>  
