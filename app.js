@@ -2,20 +2,16 @@ const port = 3000
 const fs = require('fs')
 const mongoose = require('mongoose')
 const express = require('express')
-var path = require('path')
 var bodyParser = require('body-parser')
-var multer = require('multer')
 const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport')
 require("./config/passport")(passport)
-var mongo = require('mongodb')
 var MongoClient = require('mongodb').MongoClient
-
-var mydb
 const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
+var mydb
 
 //var router = exp.Router()
 const app = express()
@@ -25,27 +21,25 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("connected to db"))
     .catch((err) => console.log(err))
 
-MongoClient.connect(dbURI, {
-    useNewUrlParser: true
-}, function(err, db) {
+
+// fetch the database
+MongoClient.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
     if (err) {
         console.log('failed to connect ' + err)
     } else {
         mydb = db.db('Shelf')
     }
-
 })
-
-
 const connection = mongoose.createConnection(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
-app.all('*', function(request, response, next) {
+// make databse accessible for all routes
+app.all('*', function(req, res, next) {
     console.log('database connected')
-    request.mydb = mydb
+    req.mydb = mydb
     next()
 })
 
+// set up web app setting
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -83,30 +77,21 @@ app.get('/home', (req, res) => {
 
 app.get('/', (req, res) => {
     res.redirect('home')
-
 })
 
+// serve the guide
 app.get('/guide', (req, res) => {
     res.locals.user = req.user
     res.render('guide')
 
 })
 
-app.get('/user/signin', (req, res) => {
-    res.render('user/signin')
-
-})
-app.use(function(req, res, next) {
-    req.db = mydb;
-    next();
-})
-
-
+// routers
 app.use(productRoutes)
 app.use(userRoutes)
 
 
-
+// listen to port
 app.listen((process.env.PORT || port), () => {
-    console.log('listening on 8081' + __dirname + '/public/index.html')
+    console.log('listening')
 })

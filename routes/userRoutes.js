@@ -1,50 +1,34 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
-var bodyParser = require('body-parser')
-var multer = require('multer')
 const fs = require('fs')
-const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-var mongo = require('mongodb')
-var MongoClient = require('mongodb').MongoClient;
 
 
 
-const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => console.log("connected to db"))
-    .catch((err) => console.log(err))
-
-
-router.use((req, res, next) => {
-    res.locals.name = "aa";
-    next();
-});
-
-// serve the homepage
+// serve the signin page
 router.get('/user/signin', (req, res) => {
     res.render('user/signin')
 
 })
 
 
-
-
-
-// serve the homepage
+// serve the signun page
 router.get('/user/signup', (req, res) => {
     res.render('user/signup')
 
 })
 
 
+/**  sign up user with information posted
+ *   hash password of user
+ *   save user info on mongodb server
+ */
 router.post('/user/signup', (req, res) => {
-    const { name, email, password, password2 } = req.body;
-    let errors = [];
-    console.log(' Name ' + name + ' email :' + email + ' pass:' + password);
+    const { name, email, password, password2 } = req.body
+    let errors = []
     if (!name || !email || !password || !password2) {
         errors.push({ msg: "Please fill in all fields" })
     }
@@ -68,7 +52,6 @@ router.post('/user/signup', (req, res) => {
     } else {
         //validation passed
         User.findOne({ email: email }).exec((err, user) => {
-            console.log(user);
             if (user) {
                 errors.push({ msg: 'email already registered' });
                 render(res, errors, name, email, password, password2);
@@ -90,7 +73,6 @@ router.post('/user/signup', (req, res) => {
                             //save user
                             newUser.save()
                                 .then((value) => {
-                                    console.log(value)
                                     res.redirect('signin');
                                 })
                                 .catch(value => console.log(value));
@@ -102,15 +84,18 @@ router.post('/user/signup', (req, res) => {
 })
 
 
+/**  authenticate user signin
+ *   if successful user's myshelf is loaded
+ *   if unsuccessful signin page is loaded again
+ */
 router.post('/user/signin',
-    //console.log(req.body)
-
     passport.authenticate('local', {
         successRedirect: '/user/myshelf',
         failureRedirect: '/user/signin',
     })
 )
 
+// serve user's inventory if signed in otherwise serves the signin page
 router.get('/user/myshelf', (req, res, next) => {
     if (!req.user)
         res.redirect('signin')
@@ -123,6 +108,7 @@ router.get('/user/myshelf', (req, res, next) => {
 
 })
 
+// sign out user and remove session
 router.get('/user/signout', (req, res) => {
     req.logout();
     res.redirect('signin');

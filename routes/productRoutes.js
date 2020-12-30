@@ -7,13 +7,11 @@ const fs = require('fs')
 const mongoose = require('mongoose')
 var path = require('path')
 const passport = require('passport')
-const session = require('express-session')
-const User = require('../models/user')
 require("../config/passport")(passport)
 const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
 
 
-// setting storage
+// setting storage for image uploads
 storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, __dirname + '/../uploads/products')
@@ -25,7 +23,10 @@ storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 
-
+/** get products based on request
+ * if user signed in gets user's products and calls callback
+ * if not signed in it fetches the public photos and call call back
+ */
 function getProducts(user, dst, res, db, callback) {
     console.log("getting products")
     if (user) {
@@ -40,22 +41,24 @@ function getProducts(user, dst, res, db, callback) {
     }
 }
 
+/** perform operation on a single product based on request
+ * if action is remove, remove product and serve 'myshelf'
+ * if action is view, renders the 'product' view
+ * if action is update, renders the 'productUpdate' view
+ */
 function singleProduct(user, id, action, res, db, callback) {
     switch (action) {
         case 'remove':
-            console.log('rem')
             Product.findByIdAndRemove(id, function(err, results) {
                 getProducts(user, 'myshelf', res, callback)
             }).lean()
             break
         case 'view':
-            console.log('find')
             Product.findById(id, function(err, results) {
                 callback(user, 'product', res, results)
             })
             break
         case 'update':
-            console.log('up')
             Product.findById(id, function(err, results) {
                 callback(user, 'productUpdate', res, results)
             })
@@ -66,6 +69,11 @@ function singleProduct(user, id, action, res, db, callback) {
     }
 }
 
+
+
+/**
+ * renders dst view and assigns its params (results,user)
+ */
 function renderView(user, dst, res, results) {
     if (dst == 'myshelf' || dst == 'index') {
         res.locals.products = results
@@ -77,17 +85,8 @@ function renderView(user, dst, res, results) {
 }
 
 
-router.get('/products/create', (req, res) => {
-    res.locals.user = req.user
-    res.render('create')
-})
-
-router.get('/products/create', (req, res) => {
-    res.locals.user = req.user
-    res.render('create')
-})
-
-
+// search the product databse for public images matching the search 
+//and render the home feed with results
 router.post('/products/search', (req, res) => {
     search = req.body.search
     req.mydb.collection('products').find({ name: { $regex: ".*" + search + ".*" }, public: true }).toArray(function(err, results) {
@@ -98,8 +97,7 @@ router.post('/products/search', (req, res) => {
 })
 
 
-
-// create product
+// serve the add a product page for user
 router.get('/product/create', (req, res) => {
     res.locals.user = req.user
     res.render('post')
@@ -107,7 +105,11 @@ router.get('/product/create', (req, res) => {
 })
 
 
-// creating new product
+/**
+ * create product with info submitted by user (name,price,quantity,image)
+ * uploads image and the product to the mongodb databse
+ * loads user's inventory
+ */
 router.post('/products/create', upload.single('image'), (req, resp, next) => {
 
     if (!req.file) {
@@ -138,25 +140,25 @@ router.post('/products/create', upload.single('image'), (req, resp, next) => {
         .catch((err) => {
             console.log(err)
         })
-
 })
 
+// serve the product page for product with id =  :id
 router.get('/products/:id', (req, res) => {
     singleProduct(req.user, req.params.id, 'view', res, req.mydb, renderView)
-
 })
 
+// remove the product with id =  :id
 router.get('/products/remove/:id', (req, res) => {
     singleProduct(req.user, req.params.id, 'remove', res, req.mydb, renderView)
-
 })
 
-
+// serve the prodcutUpdate view for the product with id =  :id
 router.get('/products/update/:id', (req, res) => {
     singleProduct(req.user, req.params.id, 'update', res, req.mydb, renderView)
-
 })
 
+
+// process request to update suer's product 
 router.post('/products/update/:id', (req, res) => {
 
     checkedValue = false
@@ -171,13 +173,11 @@ router.post('/products/update/:id', (req, res) => {
     }, function(err, result) {
         getProducts(req.user, 'myshelf', res, req.mydb, renderView)
     })
-
 })
 
-
+// serve the inventory for user
 router.get('/products/myshelf', (req, res) => {
     getProducts(req.user, 'myshelf', res, req.mydb, renderView)
-
 })
 
 
