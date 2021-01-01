@@ -159,7 +159,7 @@ Users or non-users can search for a product name using the search bar
 
 Armin Talaie 
 <br>
-[Email](talaiearmin78@gmail.com) - talaiearmin78@gmail.com
+[Email](talaiearmin78@gmail.com)
 <br>
 [LinkedIn](https://www.linkedin.com/in/armin-talaie) 
 <br>
