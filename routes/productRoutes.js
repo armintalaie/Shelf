@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 var path = require('path')
 const passport = require('passport')
 require("../config/passport")(passport)
-const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
+const dbURI // database link
 
 
 // setting storage for image uploads
