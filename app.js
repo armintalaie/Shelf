@@ -10,7 +10,7 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require('passport')
 require("./config/passport")(passport)
 var MongoClient = require('mongodb').MongoClient
-const dbURI = 'mongodb+srv://userAr:armin1234@cluster0.uc5fp.mongodb.net/Shelf?retryWrites=true&w=majority'
+const dbURI // databse link 
 var mydb
 
 //var router = exp.Router()
